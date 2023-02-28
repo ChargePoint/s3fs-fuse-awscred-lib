@@ -19,6 +19,8 @@
 #include <string.h>
 #include <iostream>
 
+#include <aws/core/utils/logging/ConsoleLogSystem.h>
+
 #include "config.h"
 #include "awscred.h"
 #include "awscred_func.h"
@@ -103,6 +105,8 @@ bool InitS3fsCredential(const char* popts, char** pperrstr)
 			return false;
 		}
 	}
+
+    options.loggingOptions.logger_create_fn = [] { return std::make_shared<Aws::Utils::Logging::ConsoleLogSystem>(Aws::Utils::Logging::LogLevel::Trace); };
 
 	//
 	// Initalize
